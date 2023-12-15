@@ -24,7 +24,8 @@ class ChangeTextTest {
 
     private lateinit var device: UiDevice
     private val textToSet = "Netology"
-    private val emptyLine = " "
+    private val emptyLine = "  "
+    private val textSpaces = "   "
 
 //    @Test
 //    fun testInternetSettings() {
@@ -110,16 +111,37 @@ class ChangeTextTest {
         val result = device.findObject(By.res(packageName, "textToBeChanged")).text
         assertEquals(result, textToSet)
     }
+
     @Test
     fun emptyLineTest() {
         val packageName = MODEL_PACKAGE
         waitForPackage(packageName)
 
+        val resultBefore = device.findObject(By.res(packageName, "textToBeChanged")).text
+
+
         device.findObject(By.res(packageName, "userInput")).text = emptyLine
         device.findObject(By.res(packageName, "buttonChange")).click()
 
         val result = device.findObject(By.res(packageName, "textToBeChanged")).text
-        assertEquals(result, "Привет, UiAutomator!")
+
+        assertEquals(result, resultBefore)
+    }
+
+    @Test
+    fun testSpacesText() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        val resultBefore = device.findObject(By.res(packageName, "textToBeChanged")).text
+
+
+        device.findObject(By.res(packageName, "userInput")).text = textSpaces
+        device.findObject(By.res(packageName, "buttonChange")).click()
+
+        val result = device.findObject(By.res(packageName, "textToBeChanged")).text
+
+        assertEquals(result, resultBefore)
     }
 
     @Test
@@ -135,6 +157,3 @@ class ChangeTextTest {
         assertEquals(result, textToSet)
     }
 }
-
-
-
